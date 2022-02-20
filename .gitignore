@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs
+/src/DevIO.Api/bin/Debug/net5.0
+/src/DevIO.Api/obj
+/src/DevIO.Business/bin/Debug/net5.0
+/src/DevIO.Business/obj
+/src/DevIO.Data/bin/Debug/net5.0
+/src/DevIO.Data/obj
