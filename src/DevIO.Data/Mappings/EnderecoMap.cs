@@ -8,7 +8,7 @@ namespace DevIO.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Endereco> builder)
         {
-            builder.ToTable("Endereco");
+            builder.ToTable("Enderecos");
 
             builder.HasKey(e => e.Id);
 
@@ -41,12 +41,12 @@ namespace DevIO.Data.Mappings
                 .HasColumnType("varchar(50)");
 
             builder.Property(e => e.FornecedorId)
-                .IsRequired()
-                .HasColumnType("UniqueIdentifier");
+                .HasColumnType("uniqueidentifier");
 
             builder.HasOne(e => e.Fornecedor)
                 .WithOne(f => f.Endereco)
                 .HasForeignKey<Endereco>(e => e.FornecedorId);
+
         }
     }
 }

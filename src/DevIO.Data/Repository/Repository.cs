@@ -24,7 +24,7 @@ namespace DevIO.Data.Repository
         
         public virtual async Task<T> ObterPorId(Guid id)
         {
-            return await _dataSet.AsNoTracking().FirstOrDefaultAsync(e => e.Equals(id));
+            return await _dataSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id));
         }
 
         public virtual async Task<IEnumerable<T>> ObterTodos()

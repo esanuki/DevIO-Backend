@@ -12,11 +12,7 @@ namespace DevIO.Api.Configuration
     {
         public static void ResolveDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<DevIODbContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("Connection"));
-            });
-
+            
             services.AddScoped<INotificadorService, NotificadorService>();
 
             services.AddScoped<IFornecedorService, FornecedorService>();
