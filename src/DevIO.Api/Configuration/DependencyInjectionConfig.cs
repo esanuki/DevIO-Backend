@@ -19,6 +19,9 @@ namespace DevIO.Api.Configuration
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
 
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+
+            services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
         }
     }
 }
