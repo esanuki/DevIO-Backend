@@ -33,7 +33,8 @@ namespace DevIO.Api
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Connection"));
             });
-            
+
+            services.AddIdentityConfig(Configuration);
 
             services.AddAutoMapper(typeof(Startup));
 
