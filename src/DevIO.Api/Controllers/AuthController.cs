@@ -1,7 +1,9 @@
 ﻿using DevIO.Api.Interop.ViewModels;
+using DevIO.Api.ObjectValues;
 using DevIO.Business.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +16,16 @@ namespace DevIO.Api.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly TokenSettings _tokenSettings;
         public AuthController(
             INotificadorService notificador, 
             SignInManager<IdentityUser> signInManager, 
-            UserManager<IdentityUser> userManager) : base(notificador)
+            UserManager<IdentityUser> userManager,
+            IOptions<TokenSettings> options) : base(notificador)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _tokenSettings = options.Value;
         }
 
         [HttpPost("nova-conta")]
@@ -39,7 +44,7 @@ namespace DevIO.Api.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return CustomResponse();
+                return CustomResponse(await JWTBuild.GerarJWT(user.Email, _userManager, _tokenSettings));
             }
 
             foreach (var item in result.Errors) NotificarErro(item.Description);
@@ -54,11 +59,8 @@ namespace DevIO.Api.Controllers
 
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, true);
 
-            if (result.Succeeded)
-            {
-                NotificarErro("Deu certo!");
-                return CustomResponse(login);
-            }
+            if (result.Succeeded)  return CustomResponse(await JWTBuild.GerarJWT(login.Email, _userManager, _tokenSettings));
+            
             if (result.IsLockedOut)
             {
                 NotificarErro("Usuario temporariamente bloqueado pr tentativas inválidas");
@@ -68,6 +70,7 @@ namespace DevIO.Api.Controllers
             NotificarErro("Usuário ou senha incorretos");
             return CustomResponse();
         }
+
     }
 
     
