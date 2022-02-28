@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DevIO.Api.Controllers
 {
-    [Route("api/v1/auth")]
+    [Route("api/v{version:apiVersion}/auth")]
     public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -21,7 +21,8 @@ namespace DevIO.Api.Controllers
             INotificadorService notificador, 
             SignInManager<IdentityUser> signInManager, 
             UserManager<IdentityUser> userManager,
-            IOptions<TokenSettings> options) : base(notificador)
+            IOptions<TokenSettings> options,
+            IUsuarioIdentity usuario) : base(notificador, usuario)
         {
             _signInManager = signInManager;
             _userManager = userManager;

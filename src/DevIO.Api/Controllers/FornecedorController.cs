@@ -8,10 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static DevIO.Api.CustomAuthorization;
 
 namespace DevIO.Api.Controllers
 {
-    [Route("api/v1/fornecedores")]
+    [Authorize]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/fornecedores")]
     public class FornecedorController : MainController
     {
         private readonly IFornecedorRepository _fornecedorRepository;
@@ -22,15 +25,17 @@ namespace DevIO.Api.Controllers
             INotificadorService notificador,
             IFornecedorRepository fornecedorRepository,
             IFornecedorService fornecedorService, 
-            IMapper mapper) : base(notificador)
+            IMapper mapper,
+            IUsuarioIdentity usuario) : base(notificador, usuario)
         {
             _fornecedorRepository = fornecedorRepository;
             _fornecedorService = fornecedorService;
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
+        [ClaimsAuthorize("Fornecedor", "Visualizar")]
         public async Task<IEnumerable<FornecedorViewModel>> ObterTodos()
         {
             return _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());
@@ -38,6 +43,7 @@ namespace DevIO.Api.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [ClaimsAuthorize("Fornecedor", "Visualizar")]
         public async Task<ActionResult<FornecedorViewModel>> ObterPorId(Guid id)
         {
             var fornecedor = _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorComEndereco(id));
@@ -48,6 +54,7 @@ namespace DevIO.Api.Controllers
         }
 
         [HttpPost]
+        [ClaimsAuthorize("Fornecedor", "Adicionar")]
         public async Task<ActionResult<FornecedorViewModel>> Adicionar([FromBody] FornecedorViewModel fornecedorView)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -58,6 +65,7 @@ namespace DevIO.Api.Controllers
         }
 
         [HttpPut]
+        [ClaimsAuthorize("Fornecedor", "Atualizar")]
         public async Task<ActionResult<FornecedorViewModel>> Atualizar([FromBody] FornecedorViewModel fornecedorViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
@@ -77,6 +85,7 @@ namespace DevIO.Api.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [ClaimsAuthorize("Fornecedor", "Excluir")]
         public async Task<ActionResult<FornecedorViewModel>> Excluir(Guid id)
         {
             var fornecedor = await _fornecedorRepository.ObterPorId(id);
