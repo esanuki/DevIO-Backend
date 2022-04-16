@@ -12,7 +12,7 @@ namespace DevIO.Business.Interfaces
         Task<IEnumerable<T>> ObterTodos();
         Task Adicionar(T entity);
         Task Atualizar(T entity);
-        Task Remover(Guid? id);
+        Task Remover(Guid id);
         Task<IEnumerable<T>> Buscar(Expression<Func<T, bool>> predicate);
         Task<int> SaveChanges();
 
