@@ -51,8 +51,6 @@ namespace DevIO.Data.Repository
 
         public virtual async Task Remover(Guid id)
         {
-            if (id == Guid.Empty) return;
-
             _context.Remove(new T { Id = id });
             await SaveChanges();
         }
