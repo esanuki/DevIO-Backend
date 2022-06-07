@@ -21,7 +21,7 @@ namespace DevIO.Data.Migrations
 
             modelBuilder.Entity("DevIO.Business.Models.Endereco", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -66,7 +66,7 @@ namespace DevIO.Data.Migrations
 
             modelBuilder.Entity("DevIO.Business.Models.Fornecedor", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -91,7 +91,7 @@ namespace DevIO.Data.Migrations
 
             modelBuilder.Entity("DevIO.Business.Models.Produto", b =>
                 {
-                    b.Property<Guid?>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 

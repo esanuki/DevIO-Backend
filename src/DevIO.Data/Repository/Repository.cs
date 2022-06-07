@@ -49,7 +49,7 @@ namespace DevIO.Data.Repository
             await SaveChanges();
         }
 
-        public virtual async Task Remover(Guid id)
+        public virtual async Task Remover(Guid? id)
         {
             _context.Remove(new T { Id = id });
             await SaveChanges();
