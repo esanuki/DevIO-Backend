@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DevIO.Api.Interop.ViewModels
@@ -20,6 +22,8 @@ namespace DevIO.Api.Interop.ViewModels
         public EnderecoViewModel Endereco { get; set; }
 
         public bool Ativo { get; set; }
+
+        public IEnumerable<ProdutoViewModel> Produtos { get; set; }
 
     }
 }

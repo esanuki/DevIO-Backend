@@ -17,5 +17,13 @@ namespace DevIO.Data.Repository
         {
             return await _dataSet.AsNoTracking().Include(f => f.Endereco).FirstOrDefaultAsync(f => f.Id.Equals(id));
         }
+
+        public async Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id)
+        {
+            return await _dataSet.AsNoTracking()
+                .Include(f => f.Endereco)
+                .Include(f => f.Produtos)
+                .FirstOrDefaultAsync(f => f.Id.Equals(id));
+        }
     }
 }

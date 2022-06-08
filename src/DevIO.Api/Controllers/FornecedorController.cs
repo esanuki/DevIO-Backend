@@ -46,7 +46,7 @@ namespace DevIO.Api.Controllers
         [ClaimsAuthorize("Fornecedor", "Visualizar")]
         public async Task<ActionResult<FornecedorViewModel>> ObterPorId(Guid id)
         {
-            var fornecedor = _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorComEndereco(id));
+            var fornecedor = _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorProdutosEndereco(id));
 
             if (fornecedor == null) return NotFound();
 
